@@ -18,12 +18,15 @@ exports.files = function( callback ) {
 
 function wrapInHtml( files ) {
     var html_list = '',
-        file_url;
+        file_url,
+        template;
 
     for ( var i = 0; i < files.length; i++ ) {
         file_url = SRC_PREFIX + files[ i ];
         remove_url = REMOVE_PREFIX + files[ i ];
-        html_list += html.file
+        template = ( isImage( files[ i ] ) ) ? html.imagePreview : html.filePreview ;
+
+        html_list += template
             .replace( '{src}', file_url )
             .replace( '{link}', file_url )
             .replace( '{remove_url}', remove_url );
@@ -92,4 +95,26 @@ exports.remove = function( file, callback ) {
         }
     } );
 
+}
+
+function isImage( file_name ) {
+    var imageExts = [ 'png', 'jpg', 'jpeg', 'ico', 'gif', 'bmp' ];
+
+    for ( var i = 0; i < imageExts.length; i++ ) {
+        if ( endsWith( file_name, imageExts[ i ] ) ) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+function endsWith( str, suffix ) {
+    for ( var i = 1; i < arguments.length; i++ ) {
+        var suffix = arguments[i];
+        if ( str.indexOf( suffix, str.length - suffix.length ) !== -1 ) {
+            return true;
+        }
+    }
+    return false;
 }
