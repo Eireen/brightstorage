@@ -1,9 +1,10 @@
 var STORAGE_PATH = '/home/eireen/brightstorage_files',
-    SRC_PREFIX = 'storage/',
+    SRC_PREFIX = 'http://localhost:50000/storage/',
     REMOVE_PREFIX = 'remove/';
 
 var fs = require( "fs" ),
     crypto = require( "crypto" ),
+    util = require( "util" ),
     html = require( "./html-templates" );
 
 exports.files = function( callback ) {
@@ -11,20 +12,42 @@ exports.files = function( callback ) {
         if ( err ) {
             throw err;
         }
-        var html_files = wrapInHtml( files );
-        callback( html.index.replace( '{files}', html_files ) );
+
+        var gotTime = [];
+        for ( var i = 0; i < files.length; i++ ) {
+            (function( i ) {
+                fs.stat( STORAGE_PATH + '/' + files[ i ], function( err, stat ) {
+                    if ( err ) {
+                        throw err;
+                    }
+                    files[ i ] = {
+                        name: files[ i ],
+                        time: stat.mtime
+                    }
+                    gotTime.push( true );
+                    if ( gotTime.length === files.length ) {
+                        files.sort( function( file1, file2 ) {
+                            return file2.time - file1.time;
+                        } );
+                        var html_files = wrapInHtml( files );
+                        callback( html.index.replace( '{files}', html_files ) );
+                    }
+                } );
+            })( i );
+           }
     } );
 }
 
 function wrapInHtml( files ) {
     var html_list = '',
         file_url,
+        remove_url,
         template;
 
     for ( var i = 0; i < files.length; i++ ) {
-        file_url = SRC_PREFIX + files[ i ];
-        remove_url = REMOVE_PREFIX + files[ i ];
-        template = ( isImage( files[ i ] ) ) ? html.imagePreview : html.filePreview ;
+        file_url = SRC_PREFIX + files[ i ].name;
+        remove_url = REMOVE_PREFIX + files[ i ].name;
+        template = ( isImage( files[ i ].name ) ) ? html.imagePreview : html.filePreview ;
 
         html_list += template
             .replace( '{src}', file_url )

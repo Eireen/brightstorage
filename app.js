@@ -7,7 +7,7 @@ var STORAGE_PATH = '/home/eireen/brightstorage_files';
 var app = express();
 
 app.configure( function () {
-    app.set( 'port', process.env.PORT || 8000 );
+    app.set( 'port', process.env.PORT || 50001 );
     app.use( express.favicon( __dirname + '/favicon.ico' ) );
     app.use( express.logger( 'dev' ) );
     app.use( express.bodyParser( { uploadDir: STORAGE_PATH, keepExtensions: true } ) );
