@@ -2,7 +2,7 @@ var express = require( 'express' ),
     http = require( 'http' ),
     storageManager = require( './storageManager' );
 
-var STORAGE_PATH = '/home/eireen/brightstorage_files';
+var STORAGE_PATH = '/home/bright/brightstorage_files';
 
 var app = express();
 

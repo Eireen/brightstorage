@@ -1,5 +1,5 @@
 var STORAGE_PATH = '/home/bright/brightstorage_files',
-    SRC_PREFIX = 'http://st.brightside.pro/',
+    SRC_PREFIX = 'http://10.9.0.2/', //st.brightside.pro
     REMOVE_PREFIX = '/admin/remove/';
 
 var fs = require( "fs" ),
