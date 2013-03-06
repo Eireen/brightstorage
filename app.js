@@ -7,7 +7,7 @@ var STORAGE_PATH = '/home/bright/brightstorage_files';
 var app = express();
 
 app.configure( function () {
-    app.set( 'port', process.env.PORT || 50001 );
+    app.set( 'port', 50001 );
     app.use( express.favicon( __dirname + '/favicon.ico' ) );
     app.use( express.logger( 'dev' ) );
     app.use( express.bodyParser( { uploadDir: STORAGE_PATH, keepExtensions: true } ) );
@@ -19,21 +19,21 @@ app.configure( 'development', function() {
     app.use( express.errorHandler() );
 } );
 
-app.get( '/', function( req, res ) {
+app.get( '/admin', function( req, res ) {
     storageManager.files( function( html ) {
         res.send( html );
     } );
 } );
 
-app.post( '/upload', function( req, res ) {
+app.post( '/admin/upload', function( req, res ) {
     storageManager.upload( req, function () {
-        res.redirect( '/' );
+        res.redirect( '/admin' );
     } )
 });
 
-app.get( '/remove/:file', function( req, res ) {
+app.get( '/admin/remove/:file', function( req, res ) {
     storageManager.remove( req.params.file, function () {
-        res.redirect( '/' );
+        res.redirect( '/admin' );
     } );
 } );
 
