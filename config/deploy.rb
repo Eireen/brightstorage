@@ -3,7 +3,7 @@ set :application, "brightstorage"
 set :repository, "https://github.com/Eireen/brightstorage"
 set :scm, "git"
 
-server "10.9.0.2", :app, :web, :db, :primary => true
+server "10.9.0.2", :app, :web
 
 set :port, 54321 #59736
 
@@ -29,13 +29,13 @@ namespace :deploy do
   task :finalize_update do ; end
 end
 
-after "deploy:update", "deploy:cleanup"
+after "deploy:update", "deploy:cleanup", :configure_nginx
 
 home_dir = "/home/#{user}"
 project_dir = "#{home_dir}/brightstorage/current"
 config_dir = "#{project_dir}/config"
 
-desc "storage nginx config"
+desc "nginx config for storage"
 task :configure_nginx, :roles => :web do
   nginx_conf_dir = "/usr/local/nginx/conf"
   run "sudo cp #{config_dir}/nginx/storage.conf #{nginx_conf_dir}"
