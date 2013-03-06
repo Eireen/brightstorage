@@ -1,6 +1,6 @@
-var STORAGE_PATH = '/home/eireen/brightstorage_files',
-    SRC_PREFIX = 'http://localhost:50000/storage/',
-    REMOVE_PREFIX = 'remove/';
+var STORAGE_PATH = '/home/bright/brightstorage_files',
+    SRC_PREFIX = 'http://st.brightside.pro/',
+    REMOVE_PREFIX = '/admin/remove/';
 
 var fs = require( "fs" ),
     crypto = require( "crypto" ),
@@ -34,7 +34,10 @@ exports.files = function( callback ) {
                     }
                 } );
             })( i );
-           }
+        }
+        if ( !files.length ) {
+            callback( html.index.replace( '{files}', '' ) );
+        }
     } );
 }
 
