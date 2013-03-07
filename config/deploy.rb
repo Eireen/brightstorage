@@ -3,9 +3,9 @@ set :application, "brightstorage"
 set :repository, "https://github.com/Eireen/brightstorage"
 set :scm, "git"
 
-server "10.9.0.2", :app, :web
+server "188.127.227.6", :app, :web
 
-set :port, 54321 #59736
+set :port, 12345 #59736
 
 user = "bright"
 
