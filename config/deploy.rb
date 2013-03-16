@@ -44,8 +44,8 @@ end
 
 desc "Настройка Backup"
 task :configure_backup, :roles => :web, :app do
-  storage_command = "backup generate:model -t brightside_st --archives --storages='dropbox' --compressors='gzip' --notifiers='mail'"
-  run "if [ ! -f #{home_dir}/Backup/models/brightside_st.rb ]; then #{storage_command}; fi"
+  command = "backup generate:model -t brightside_st --archives --storages='dropbox' --compressors='gzip' --notifiers='mail'"
+  run "if [ ! -f #{home_dir}/Backup/models/brightside_st.rb ]; then #{command}; fi"
   run "cp #{config}/brightside_st.rb #{home_dir}/Backup/models"
 end
 
