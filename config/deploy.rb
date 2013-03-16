@@ -44,8 +44,7 @@ end
 
 desc "Настройка Backup"
 task :configure_backup do
-  command = 'backup generate:model -t brightside_st --archives --storages="dropbox" --compressors="gzip" --notifiers="mail"'
-  run "if [ ! -f #{home_dir}/Backup/models/brightside_st.rb ]; then cd #{config_dir}; bash -l -c '#{command}'' ; cd -; fi"
+  run "if [ ! -f #{home_dir}/Backup/models/brightside_st.rb ]; then cd #{config_dir}/backup; ./backup_init.sh ; cd -; fi"
   run "cp #{config_dir}/brightside_st.rb #{home_dir}/Backup/models"
 end
 
