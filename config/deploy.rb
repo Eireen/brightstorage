@@ -44,8 +44,8 @@ end
 
 desc "Настройка Backup"
 task :configure_backup do
-  run "if [ ! -f #{home_dir}/Backup/models/brightside_st.rb ]; then cd #{home_dir}; backup generate:model -t brightside_st --archives --storages='dropbox' --compressors='gzip' --notifiers='mail'; cd -; fi"
-  run "cp #{config}/brightside_st.rb #{home_dir}/Backup/models"
+  run "if [ ! -f #{home_dir}/Backup/models/brightside_st.rb ]; then cd #{config_dir}; ./backup_init.sh brightside_st ; cd -; fi"
+  run "cp #{config_dir}/brightside_st.rb #{home_dir}/Backup/models"
 end
 
 require 'capistrano/recipes/deploy/strategy/copy'
