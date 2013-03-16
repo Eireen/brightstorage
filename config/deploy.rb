@@ -35,13 +35,19 @@ home_dir = "/home/#{user}"
 project_dir = "#{home_dir}/brightstorage/current"
 config_dir = "#{project_dir}/config"
 
-desc "nginx config for storage"
+desc "Настройка nginx"
 task :configure_nginx, :roles => :web do
   nginx_conf_dir = "/usr/local/nginx/conf"
   run "sudo cp #{config_dir}/nginx/storage.conf #{nginx_conf_dir}"
   run "sudo cp #{config_dir}/nginx/st.passw.digest #{nginx_conf_dir}"
 end
 
+desc "Настройка Backup"
+task :configure_backup, :roles => :web, :app do
+  storage_command = "backup generate:model -t brightside_st --archives --storages='dropbox' --compressors='gzip' --notifiers='mail'"
+  run "if [ ! -f #{home_dir}/Backup/models/brightside_st.rb ]; then #{storage_command}; fi"
+  run "cp #{config}/brightside_st.rb #{home_dir}/Backup/models"
+end
 
 require 'capistrano/recipes/deploy/strategy/copy'
 

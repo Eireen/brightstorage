@@ -50,7 +50,7 @@ function wrapInHtml( files ) {
     for ( var i = 0; i < files.length; i++ ) {
         file_url = SRC_PREFIX + files[ i ].name;
         remove_url = REMOVE_PREFIX + files[ i ].name;
-        template = ( isImage( files[ i ].name ) ) ? html.imagePreview : html.filePreview ;
+        template = ( isImage( files[ i ].name ) ) ? html.imagePreview : html.filePreview;
 
         html_list += template
             .replace( '{src}', file_url )
@@ -88,10 +88,10 @@ exports.upload = function( req, callback ) {
         }
         hash = crypto.createHash( 'sha1' ).update( content ).digest( 'base64' );
         hash = hash
-            .replace(/\+/g, '-')
-            .replace(/\//g, '_')
-            .replace(/=/g, '')
-            .replace(/^[+-]+/g, '');
+            .replace( /\+/g, '-' )
+            .replace( /\//g, '_' )
+            .replace( /=/g, '' )
+            .replace( /^[+-]+/g, '' );
         hash_name = hash + '.' + ext;
         new_path = STORAGE_PATH + '/' + hash_name;
         fs.rename( path, new_path, function( err ) {
