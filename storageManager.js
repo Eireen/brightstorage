@@ -69,8 +69,7 @@ exports.upload = function( req, callback ) {
         hash_name,
         new_path;
 
-    if ( !req.files[ id ].size ) {
-        //TODO: What???
+    if ( req.files[ id ]._writeStream.bytesWritten == 0 ) {
         fs.unlink( req.files[ id ].path, function( err ) {
             if ( err ) {
                 throw err;
@@ -79,6 +78,7 @@ exports.upload = function( req, callback ) {
         callback();
         return;
     }
+
     path = req.files[ id ].path;
     ext = path.substr( path.indexOf( '.' ) + 1 );
 
