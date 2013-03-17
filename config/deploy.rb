@@ -18,15 +18,18 @@ set :keep_releases, 3
 
 namespace :deploy do
   task :start do
-    run "cd ~/mongroup && mongroup start storage"
-  end
-  task :stop do
-    run "cd ~/mongroup && mongroup stop storage"
-  end
-  task :restart, :roles => :app, :except => { :no_release => true } do
-    run "cd ~/mongroup && mongroup restart storage"
-  end
-  task :finalize_update do ; end
+      run "cd ~/mongroup && mongroup start storage"
+      run "sudo service nginx start"
+    end
+    task :stop do
+      run "cd ~/mongroup && mongroup stop storage"
+      run "sudo service nginx stop"
+    end
+    task :restart, :roles => :app, :except => { :no_release => true } do
+      run "cd ~/mongroup && mongroup restart storage"
+      run "sudo service nginx restart"
+    end
+    task :finalize_update do ; end
 end
 
 after "deploy:update", "deploy:cleanup", :configure_nginx, :configure_backup
