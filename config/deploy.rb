@@ -1,7 +1,9 @@
 set :application, "brightstorage"
 
-set :repository, "https://github.com/Eireen/brightstorage"
 set :scm, "git"
+set :repository, "https://github.com/Eireen/brightstorage"
+set :branch, "test"
+
 
 server "188.127.227.6", :app, :web
 
