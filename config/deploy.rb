@@ -33,6 +33,7 @@ namespace :deploy do
 end
 
 after "deploy:update", "deploy:cleanup", :configure_nginx, :configure_backup
+after "deploy:rollback", :configure_nginx, :configure_backup
 
 home_dir = "/home/#{user}"
 project_dir = "#{home_dir}/brightstorage/current"
